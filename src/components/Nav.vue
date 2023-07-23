@@ -12,25 +12,30 @@
           </DisclosureButton>
         </div>
         <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+          <!--
           <div class="flex flex-shrink-0 items-center">
             <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                  alt="Your Company"/>
           </div>
+          -->
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
 
-              <a v-for="item in navigation" :key="item.name" :href="item.href"
-                 :class="[item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
-                 :aria-current="item.current ? 'page' : undefined">{{ item.name }}</a>
+              <router-link v-for="item in navigation" :to="item.to"
+                           :class="[(item.to === path) ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-sm font-medium']"
+                           :aria-current="(item.to === path) ? 'page' : undefined">{{ item.name }}
+              </router-link>
             </div>
           </div>
         </div>
         <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+          <!--
           <button type="button"
                   class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             <span class="sr-only">View notifications</span>
             <BellIcon class="h-6 w-6" aria-hidden="true"/>
           </button>
+          -->
 
           <!-- Profile dropdown -->
           <Menu as="div" class="relative ml-3">
@@ -51,6 +56,13 @@
               <MenuItems
                   class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <MenuItem v-slot="{ active }">
+                  <a href="#" @click.prevent="logoutProfile()"
+                     :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">
+                    Выход
+                  </a>
+                </MenuItem>
+                <!--
+                <MenuItem v-slot="{ active }">
                   <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Your
                     Profile</a>
                 </MenuItem>
@@ -62,6 +74,7 @@
                   <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Sign
                     out</a>
                 </MenuItem>
+                -->
               </MenuItems>
             </transition>
           </Menu>
@@ -83,15 +96,31 @@
 <script setup lang="ts">
 import {Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 import {Bars3Icon, BellIcon, XMarkIcon} from '@heroicons/vue/24/outline'
+import {logout} from "@/services/auth";
+import {computed} from 'vue'
+import {useRouter, useRoute} from 'vue-router';
+
+const router = useRouter();
+const route = useRoute();
+
+const path = computed(() => route.path);
+console.log('path: ', path.value);
 
 const navigation = [
-  {name: 'О себе', href: '#', current: true}
-/*
-{ name: 'Team', href: '#', current: false },
-{ name: 'Projects', href: '#', current: false },
-{ name: 'Calendar', href: '#', current: false },
-*/
-]
+  {name: 'Репозитории', to: "/repository", href: '#', current: true},
+  {name: 'Видео', to: "/video", href: '#', current: true},
+  {name: 'Форма для связи', to: "/contact", href: '#', current: true},
+  /*
+  { name: 'Team', href: '#', current: false },
+  { name: 'Projects', href: '#', current: false },
+  { name: 'Calendar', href: '#', current: false },
+  */
+];
+
+const logoutProfile = () => {
+  logout();
+  router.push('/');
+}
 
 /*
 TODO

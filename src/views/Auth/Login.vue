@@ -1,26 +1,5 @@
-<!--
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
--->
 <template>
-  <!--
-    This example requires updating your template:
 
-    ```
-    <html class="h-full bg-white">
-    <body class="h-full">
-    ```
-  -->
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <!--
@@ -60,6 +39,9 @@
           </button>
         </div>
       </form>
+      <p class="text-red-300" v-if="hasErrors">
+        Ошибка авторизации
+      </p>
 
       <p class="mt-10 text-left text-sm text-gray-500">
         Если у вас ещё нет аккаунта?
@@ -72,7 +54,16 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 import {login} from "@/services/auth";
+import {checkAuth} from "@/services/auth";
+import { useRouter } from 'vue-router';
+const router = useRouter();
 
+
+if (checkAuth()) {
+  router.push('repository');
+}
+
+const hasErrors = ref<boolean>(false);
 const email = ref<string>("");
 const password = ref<string>("");
 
@@ -83,10 +74,13 @@ const sendForm = async (): void => {
   if (!password.value) return;
 
   requestProcess.value = true;
-  const result = await login(email.value, password.value);
+  const status = await login(email.value, password.value);
   requestProcess.value = false;
 
-  console.log('send form');
+  hasErrors.value = !status;
+  if (status) {
+    router.push('repository');
+  }
 };
 
 </script>

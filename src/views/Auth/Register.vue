@@ -95,7 +95,6 @@ const sendForm = async (): void => {
   const result = await register(name.value, email.value, password.value);
   requestProcess.value = false;
 
-  console.log('send form');
 };
 
 </script>
