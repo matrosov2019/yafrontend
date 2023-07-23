@@ -7,9 +7,9 @@
     </div>
   </header>
   <main>
-    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 text-left">
+    <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 text-center">
 
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/RzTDxlKABRs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      <iframe style="margin: 0 auto" width="320" height="320" src="https://www.youtube.com/embed/RzTDxlKABRs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
     </div>
   </main>
