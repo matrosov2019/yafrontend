@@ -68,6 +68,10 @@
         </div>
       </form>
 
+      <p class="text-red-300" v-if="hasErrors">
+        Ошибка авторизации
+      </p>
+
       <p class="mt-10 text-left text-sm text-gray-500">
         У Вас уже есть аккаунт?
         <router-link to="/login" class="text-indigo-600 hover:text-indigo-500">Авторизация</router-link>
@@ -78,11 +82,18 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {register} from "@/services/auth";
+import {checkAuth, register} from "@/services/auth";
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+if (checkAuth()) {
+  router.push('repository');
+}
 
 const name = ref<string>("");
 const email = ref<string>("");
 const password = ref<string>("");
+const hasErrors = ref<boolean>(false);
 
 const requestProcess = ref<boolean>(false);
 
@@ -92,8 +103,15 @@ const sendForm = async (): void => {
   if (!password.value) return;
 
   requestProcess.value = true;
-  const result = await register(name.value, email.value, password.value);
+  const status = await register(name.value, email.value, password.value);
+  console.log('status: ', status);
   requestProcess.value = false;
+
+  hasErrors.value = !status;
+
+  if (status) {
+    router.push('repository');
+  }
 
 };
 

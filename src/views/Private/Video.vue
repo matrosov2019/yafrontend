@@ -9,21 +9,7 @@
   <main>
     <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8 text-left">
 
-      <ul>
-        <li>
-          <a href="https://github.com/matrosov2019/yafrontend.git" class="font-medium text-indigo-600 "
-             target="_blank">
-            <BeakerIcon class="h-5 w-6 text-indigo-600 inline-flex"/>
-            Скачать Frontend репозиторий
-          </a>
-        </li>
-        <li>
-          <a href="https://github.com/matrosov2019/yabackend.git" class="font-medium text-indigo-600" target="_blank">
-            <BeakerIcon class="h-5 w-6 text-indigo-600 inline-flex"/>
-            Скачать Backend репозиторий
-          </a>
-        </li>
-      </ul>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/RzTDxlKABRs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
     </div>
   </main>

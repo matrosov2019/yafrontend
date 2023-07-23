@@ -70,12 +70,6 @@ export const deleteCookie = (name: string): void => {
 
 
 export const register = async (name: string, email: string, password: string) => {
-    /**
-     Алгоритм:
-     1. Делаем запрос к API
-     2. В случае успеха возвращаем true и сохраняем в cookie token
-     3.
-     */
 
     try {
         const {data} = await axios.post(`${API_URL}/register`, {
@@ -83,6 +77,15 @@ export const register = async (name: string, email: string, password: string) =>
             email: email.trim().toLocaleLowerCase(),
             password: password.trim()
         });
+
+        const {token, expiresIn} = data;
+
+        //Сохраняем куки на 2 часа
+        const currentTime = new Date().getTime();
+        const expires = new Date(currentTime + expiresIn);
+        setCookie('access_token', token, {expires: expires});
+
+        return true;
 
         //Сохраняем данные в cookies, если есть
     } catch (error) {

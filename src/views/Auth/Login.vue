@@ -53,11 +53,9 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {login} from "@/services/auth";
-import {checkAuth} from "@/services/auth";
+import {checkAuth, login} from "@/services/auth";
 import { useRouter } from 'vue-router';
 const router = useRouter();
-
 
 if (checkAuth()) {
   router.push('repository');
